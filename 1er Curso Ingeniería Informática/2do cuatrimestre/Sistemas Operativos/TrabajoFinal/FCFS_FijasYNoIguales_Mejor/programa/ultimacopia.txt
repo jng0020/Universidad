@@ -1,0 +1,5 @@
+Proceso p1 Llegada 1 Ejecucion 3 Memoria 9
+Proceso p2 Llegada 2 Ejecucion 11 Memoria 6
+Proceso p3 Llegada 4 Ejecucion 5 Memoria 17
+Proceso p4 Llegada 6 Ejecucion 8 Memoria 20
+Proceso p5 Llegada 1 Ejecucion 2 Memoria 50

@@ -1,0 +1,4 @@
+Particion 1 60
+Particion 2 50
+Particion 3 25
+Particion 4 15

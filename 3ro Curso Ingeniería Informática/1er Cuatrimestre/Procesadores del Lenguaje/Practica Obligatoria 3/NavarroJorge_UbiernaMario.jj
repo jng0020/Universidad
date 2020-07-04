@@ -1,0 +1,211 @@
+/*
+  @author: Jorge Navarro Gonzalez y Mario Ubierna San Mames
+  @date: 22/11/2017
+  @version: 1.0
+*/
+options {
+  BUILD_TOKEN_MANAGER=true;
+  COMMON_TOKEN_ACTION=false;
+  DEBUG_PARSER=false;
+  STATIC=false;
+}
+
+PARSER_BEGIN(Practica3)
+
+public class Practica3 {
+    int contador = -1; //contador para la funcion etiqueta
+    int contadorSwitch = -1; //contador para la funcion vnumero
+
+    public static void main(String args []) throws ParseException, java.io.FileNotFoundException
+    {
+      Practica3 tkmngr = null;
+      if (args.length < 1){
+        tkmngr = new Practica3(new Practica3TokenManager(new SimpleCharStream(System.in)));
+        tkmngr.statList();
+      }
+      else{
+        tkmngr = new Practica3(new Practica3TokenManager(new SimpleCharStream(new java.io.FileInputStream(args [0]), 0, 0)));
+        tkmngr.statList();
+      }
+      Token tk;
+      try
+      {
+        while ((tk = tkmngr.getNextToken()).kind != EOF);
+      }
+      catch(TokenMgrError x){
+        System.err.println("Error");
+        throw new RuntimeException(x);
+      }
+}
+    //Calcula la siguiente etiqueta
+    private int etiqueta(){
+        return ++contador;
+      }
+    //Calcula el siguiente número de la variable V del switch
+    private int vnumero(){
+        return ++contadorSwitch;
+      }
+}
+PARSER_END(Practica3)
+
+TOKEN_MGR_DECLS :
+{
+  static int prevstate;//para guardar el estado previo
+}
+
+
+TOKEN :
+{
+<PC: ";">
+| <LLA:  "{">
+| <LLC:  "}">
+| <ASSIG:  "<-">
+| <MAIG:   "+=">
+| <MEIG:   "-=">
+| <PARA:   "(">
+| <PARC:   ")">
+| <PUN:    ":">
+| <SUM:    "+">
+| <RES:    "-">
+| <POR:    "*">
+| <DIV:    "/">
+| <IF:     "if">
+| <ELSE:   "else">
+| <FI:     "fi">
+| <SWITCH: "switch">
+| <WHILE:  "while">
+| <CASE:    "case">
+| <DO:     "do">
+| <PRINT:  "print">
+| <ID: (["a"-"z","A"-"Z"])(["a"-"z","A"-"Z","0"-"9"])*>
+| <NUM: ([ "0"-"9" ])+>
+}
+
+SKIP:
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+<*> SKIP :
+{
+  <"//"(~["\n"])*> {}
+| <"#"(~["\n"])*> {}
+| <"/*"> {prevstate=curLexState;} : COMM
+}
+
+<COMM> SKIP :
+{
+  <"*/"> {SwitchTo(prevstate);}
+}
+
+void statList():
+{}
+  {
+    stat() (<PC> statList())?
+  }
+
+void stat():
+{}
+  {
+    <LLA> statList() <LLC>
+    | assig()
+    | struct()
+  }
+
+void assig():
+{
+  Token token,token2;
+  int sub=0; //flag para saber si es suma o resta
+  }
+  {
+    token=<ID>(
+      (<ASSIG>{System.out.print("\tvalori "+token.image+"\n");} exp(){System.out.print("\tasigna\n");}) 
+      |(<MAIG>
+      |<MEIG>{sub=1;}) {System.out.print("\tvalori "+token.image+"\n"+"\tvalord "+token.image+"\n");}
+      token2=<NUM>
+      {System.out.print("\tmete "+token2.image+"\n");
+      if(sub==1){
+        System.out.print("\tsub\n");
+      }else{
+        System.out.print("\tsum\n");
+      }
+      System.out.print("\tasigna\n");})
+  }
+
+void struct():
+{
+  int inicial=0; //etiqueta inicial IF
+  int despues; //etiqueta despues ELSE
+  int vswitch=-1; //para saber el valor de la variable V
+  int etiquetaSwitch=0; //etiqueta SWITCH
+  int etiquetaDo=0; //etiqueta DO
+  int etiquetaDoW=0; //etiqueta DO-WHILE
+  int etiquetaW=0; //etiqueta WHILE
+}
+  {
+    /**
+    expresiones regulares
+    <IF> <PARA> exp() <PARC> stat() ((<ELSE> stat()) <FI> | (<FI>))
+    <SWITCH> <PARA> exp() <PARC> <LLA> statCase() <LLC>
+    <WHILE> <PARA> exp() <PARC> stat()
+    <DO> stat() <WHILE> <PARA> exp() <PARC>
+    <PRINT> <PARA> exp() <PARC>
+     */
+    ((<IF> <PARA> exp() {inicial=etiqueta();System.out.print("\tsifalsovea  LBL"+inicial+"\n");}
+      <PARC> stat() ((<ELSE>{despues=etiqueta(); System.out.print("\tvea LBL"+despues+"\n"); System.out.print("LBL "+inicial+"\n");} stat() {System.out.print("LBL"+despues+"\n");}<FI>)
+                     | ({System.out.print("LBL"+inicial+"\n");}<FI>)))
+    |(<SWITCH>{vswitch=vnumero();System.out.print("\tvalori V"+vswitch+"\n");} 
+      <PARA> exp(){System.out.print("\tasigna\n");} 
+      <PARC> <LLA>{etiquetaSwitch=etiqueta();} statCase(vswitch,etiquetaSwitch) {System.out.print("LBL "+etiquetaSwitch+"\n");}<LLC>)
+    |(<WHILE>{etiquetaW=etiqueta();System.out.print("LBL"+etiquetaW+"\n");} 
+      <PARA> exp() {despues=etiqueta();System.out.print("\tsifalsovea LBL"+despues+"\n");}
+      <PARC> stat(){System.out.print("\tvea LBL"+etiquetaW+"\n");System.out.print("LBL"+despues+"\n");})
+    |(<DO> {etiquetaDo=etiqueta();System.out.print("LBL "+etiquetaDo+"\n");} stat() 
+      <WHILE> <PARA> exp(){etiquetaDoW=etiqueta();System.out.print("\tsifalsovea LBL"+etiquetaDoW+"\n");} 
+      <PARC>{System.out.print("\tvea LBL"+etiquetaDo+"\n");System.out.print("LBL "+etiquetaDoW+"\n");})
+    |(<PRINT> <PARA> exp() <PARC>{System.out.print("\tprint\n");}))
+  }
+
+void statCase(int vswitch,int etiquetaSwitch):
+{
+int etiquetaCase=etiqueta();
+}
+  {
+    /**
+    expresion regular
+    <CASE> exp() <PUN> stat() (statCase())?
+     */
+    (<CASE> exp(){System.out.print("\tvalord V"+vswitch+"\n\tsub\n");} 
+     <PUN>{System.out.print("\tsiciertovea LBL"+etiquetaCase+"\n");}
+     stat() {System.out.print("\tvea LBL"+etiquetaSwitch+"\n");System.out.print("LBL "+etiquetaCase+"\n");}
+     (statCase(vswitch,etiquetaSwitch))?)
+  }
+
+void exp():
+{}
+  {
+    mexp() ((<SUM>mexp(){System.out.print("\tsum\n");}|<RES>mexp(){System.out.print("\tsub\n");}))*
+  }
+
+void mexp():
+{}
+  {
+    value() ((<POR>value(){System.out.print("\tmul\n");}|<DIV>value(){System.out.print("\tdiv\n");}))*
+  }
+
+void value():
+{
+  Token token;
+}
+  {
+    token=<NUM>{System.out.print("\tmete "+token.image+"\n");}
+    |token=<ID>{System.out.print("\tvalord "+token.image+"\n");}
+    |<PARA> exp() <PARC>
+  }
+
+<*> SKIP :
+{
+  <~[]>
+}

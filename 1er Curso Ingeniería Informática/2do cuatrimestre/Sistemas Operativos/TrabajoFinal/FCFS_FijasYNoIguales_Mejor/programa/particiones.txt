@@ -1,0 +1,4 @@
+particion 1 50 memoriamax 150
+particion 3 15
+particion 2 25
+particion 4 60

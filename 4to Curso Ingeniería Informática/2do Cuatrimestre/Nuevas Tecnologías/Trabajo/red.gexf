@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf version="1.2" xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes class="edge" mode="static">
+      <attribute id="0" title="weigth" type="long" />
+    </attributes>
+    <meta>
+      <creator>NetworkX 2.2</creator>
+      <lastmodified>25/05/2019</lastmodified>
+    </meta>
+    <nodes>
+      <node id="Martin Garrix" label="Martin Garrix" />
+      <node id="Julian Jordan" label="Julian Jordan" />
+      <node id="Justin Mylo" label="Justin Mylo" />
+      <node id="David Guetta" label="David Guetta" />
+      <node id="Brooks" label="Brooks" />
+      <node id="Matisse &amp; Sadko" label="Matisse &amp; Sadko" />
+      <node id="Tiësto" label="Tiësto" />
+      <node id="Afrojack" label="Afrojack" />
+      <node id="Dillion Francis" label="Dillion Francis" />
+      <node id="DVBBS" label="DVBBS" />
+      <node id="Dimitri Vegas &amp; Like Mike" label="Dimitri Vegas &amp; Like Mike" />
+      <node id="Hardwell" label="Hardwell" />
+      <node id="W&amp;W" label="W&amp;W" />
+      <node id="VINAI" label="VINAI" />
+      <node id="BlasterJaxx" label="BlasterJaxx" />
+      <node id="Steve Aoki" label="Steve Aoki" />
+      <node id="Quintino" label="Quintino" />
+      <node id="KSHMR" label="KSHMR" />
+      <node id="R3HAB" label="R3HAB" />
+      <node id="Nicky Romero" label="Nicky Romero" />
+      <node id="Diplo" label="Diplo" />
+      <node id="Skrillex" label="Skrillex" />
+      <node id="DJ Snake" label="DJ Snake" />
+      <node id="Oliver Heldens" label="Oliver Heldens" />
+      <node id="Don Diablo" label="Don Diablo" />
+      <node id="The Chainsmokers" label="The Chainsmokers" />
+      <node id="Calvin Harris" label="Calvin Harris" />
+      <node id="Alesso" label="Alesso" />
+      <node id="Alan Walker" label="Alan Walker" />
+      <node id="Ummet Ozcan" label="Ummet Ozcan" />
+      <node id="Sander van Doorn" label="Sander van Doorn" />
+      <node id="Jay Hardway" label="Jay Hardway" />
+      <node id="Mesto" label="Mesto" />
+      <node id="Bassjackers" label="Bassjackers" />
+      <node id="Robin Schulz" label="Robin Schulz" />
+      <node id="Lucas &amp; Steve" label="Lucas &amp; Steve" />
+      <node id="Armin van Buuren" label="Armin van Buuren" />
+      <node id="Pep &amp; Rash" label="Pep &amp; Rash" />
+    </nodes>
+    <edges>
+      <edge id="0" source="Martin Garrix" target="Julian Jordan" weight="4" />
+      <edge id="1" source="Martin Garrix" target="Justin Mylo" weight="2" />
+      <edge id="2" source="Martin Garrix" target="David Guetta" weight="2" />
+      <edge id="3" source="Martin Garrix" target="Brooks" weight="3" />
+      <edge id="4" source="Martin Garrix" target="Matisse &amp; Sadko" weight="5" />
+      <edge id="5" source="Martin Garrix" target="Tiësto" weight="1" />
+      <edge id="6" source="Martin Garrix" target="Afrojack" weight="1" />
+      <edge id="7" source="Martin Garrix" target="Dillion Francis" weight="1" />
+      <edge id="8" source="Martin Garrix" target="DVBBS" weight="1" />
+      <edge id="9" source="Martin Garrix" target="Dimitri Vegas &amp; Like Mike" weight="1" />
+      <edge id="10" source="Martin Garrix" target="Sander van Doorn" weight="1" />
+      <edge id="11" source="Martin Garrix" target="Jay Hardway" weight="2" />
+      <edge id="12" source="Martin Garrix" target="Mesto" weight="2" />
+      <edge id="13" source="Martin Garrix" target="Bassjackers" weight="1" />
+      <edge id="14" source="Justin Mylo" target="Mesto" weight="1" />
+      <edge id="15" source="David Guetta" target="Steve Aoki" weight="2" />
+      <edge id="16" source="David Guetta" target="Afrojack" weight="6" />
+      <edge id="17" source="David Guetta" target="Nicky Romero" weight="3" />
+      <edge id="18" source="David Guetta" target="Dimitri Vegas &amp; Like Mike" weight="1" />
+      <edge id="19" source="David Guetta" target="Brooks" weight="2" />
+      <edge id="20" source="David Guetta" target="Robin Schulz" weight="1" />
+      <edge id="21" source="Brooks" target="Bassjackers" weight="2" />
+      <edge id="22" source="Matisse &amp; Sadko" target="Tiësto" weight="1" />
+      <edge id="23" source="Tiësto" target="Hardwell" weight="1" />
+      <edge id="24" source="Tiësto" target="Oliver Heldens" weight="1" />
+      <edge id="25" source="Tiësto" target="Don Diablo" weight="1" />
+      <edge id="26" source="Tiësto" target="KSHMR" weight="2" />
+      <edge id="27" source="Tiësto" target="The Chainsmokers" weight="1" />
+      <edge id="28" source="Tiësto" target="Ummet Ozcan" weight="1" />
+      <edge id="29" source="Tiësto" target="Mesto" weight="2" />
+      <edge id="30" source="Afrojack" target="Hardwell" weight="2" />
+      <edge id="31" source="Afrojack" target="Dimitri Vegas &amp; Like Mike" weight="1" />
+      <edge id="32" source="Afrojack" target="Steve Aoki" weight="1" />
+      <edge id="33" source="Afrojack" target="R3HAB" weight="1" />
+      <edge id="34" source="Afrojack" target="Quintino" weight="1" />
+      <edge id="35" source="Afrojack" target="Bassjackers" weight="1" />
+      <edge id="36" source="Dillion Francis" target="Skrillex" weight="1" />
+      <edge id="37" source="Dillion Francis" target="Calvin Harris" weight="1" />
+      <edge id="38" source="DVBBS" target="Dimitri Vegas &amp; Like Mike" weight="1" />
+      <edge id="39" source="DVBBS" target="Steve Aoki" weight="1" />
+      <edge id="40" source="DVBBS" target="VINAI" weight="1" />
+      <edge id="41" source="DVBBS" target="Sander van Doorn" weight="1" />
+      <edge id="42" source="DVBBS" target="Jay Hardway" weight="1" />
+      <edge id="43" source="Dimitri Vegas &amp; Like Mike" target="Hardwell" weight="1" />
+      <edge id="44" source="Dimitri Vegas &amp; Like Mike" target="Diplo" weight="2" />
+      <edge id="45" source="Dimitri Vegas &amp; Like Mike" target="W&amp;W" weight="3" />
+      <edge id="46" source="Dimitri Vegas &amp; Like Mike" target="KSHMR" weight="1" />
+      <edge id="47" source="Dimitri Vegas &amp; Like Mike" target="Quintino" weight="2" />
+      <edge id="48" source="Dimitri Vegas &amp; Like Mike" target="Steve Aoki" weight="2" />
+      <edge id="49" source="Dimitri Vegas &amp; Like Mike" target="VINAI" weight="2" />
+      <edge id="50" source="Dimitri Vegas &amp; Like Mike" target="Nicky Romero" weight="1" />
+      <edge id="51" source="Dimitri Vegas &amp; Like Mike" target="Ummet Ozcan" weight="2" />
+      <edge id="52" source="Dimitri Vegas &amp; Like Mike" target="Bassjackers" weight="3" />
+      <edge id="53" source="Dimitri Vegas &amp; Like Mike" target="Armin van Buuren" weight="1" />
+      <edge id="54" source="Hardwell" target="W&amp;W" weight="6" />
+      <edge id="55" source="Hardwell" target="VINAI" weight="1" />
+      <edge id="56" source="Hardwell" target="BlasterJaxx" weight="2" />
+      <edge id="57" source="Hardwell" target="Steve Aoki" weight="1" />
+      <edge id="58" source="Hardwell" target="Quintino" weight="2" />
+      <edge id="59" source="Hardwell" target="KSHMR" weight="1" />
+      <edge id="60" source="Hardwell" target="R3HAB" weight="1" />
+      <edge id="61" source="Hardwell" target="Nicky Romero" weight="2" />
+      <edge id="62" source="Hardwell" target="Armin van Buuren" weight="1" />
+      <edge id="63" source="W&amp;W" target="Nicky Romero" weight="1" />
+      <edge id="64" source="W&amp;W" target="BlasterJaxx" weight="2" />
+      <edge id="65" source="W&amp;W" target="Ummet Ozcan" weight="2" />
+      <edge id="66" source="W&amp;W" target="Armin van Buuren" weight="4" />
+      <edge id="67" source="VINAI" target="R3HAB" weight="1" />
+      <edge id="68" source="BlasterJaxx" target="Quintino" weight="1" />
+      <edge id="69" source="BlasterJaxx" target="Bassjackers" weight="1" />
+      <edge id="70" source="Steve Aoki" target="Diplo" weight="1" />
+      <edge id="71" source="Steve Aoki" target="Don Diablo" weight="1" />
+      <edge id="72" source="Steve Aoki" target="Alan Walker" weight="1" />
+      <edge id="73" source="Steve Aoki" target="Nicky Romero" weight="1" />
+      <edge id="74" source="Steve Aoki" target="R3HAB" weight="2" />
+      <edge id="75" source="Steve Aoki" target="Quintino" weight="1" />
+      <edge id="76" source="Steve Aoki" target="Ummet Ozcan" weight="1" />
+      <edge id="77" source="Quintino" target="R3HAB" weight="2" />
+      <edge id="78" source="KSHMR" target="R3HAB" weight="3" />
+      <edge id="79" source="KSHMR" target="Bassjackers" weight="2" />
+      <edge id="80" source="R3HAB" target="Calvin Harris" weight="1" />
+      <edge id="81" source="R3HAB" target="Ummet Ozcan" weight="1" />
+      <edge id="82" source="Diplo" target="Skrillex" weight="10" />
+      <edge id="83" source="Diplo" target="DJ Snake" weight="1" />
+      <edge id="84" source="Skrillex" target="DJ Snake" weight="1" />
+      <edge id="85" source="Oliver Heldens" target="Sander van Doorn" weight="1" />
+      <edge id="86" source="Calvin Harris" target="Alesso" weight="1" />
+      <edge id="87" source="Ummet Ozcan" target="Lucas &amp; Steve" weight="1" />
+      <edge id="88" source="Sander van Doorn" target="Pep &amp; Rash" weight="1" />
+      <edge id="89" source="Jay Hardway" target="Mesto" weight="1" />
+      <edge id="90" source="Jay Hardway" target="Bassjackers" weight="2" />
+      <edge id="91" source="Bassjackers" target="Lucas &amp; Steve" weight="1" />
+      <edge id="92" source="Lucas &amp; Steve" target="Armin van Buuren">
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </edge>
+      <edge id="93" source="Lucas &amp; Steve" target="Pep &amp; Rash" weight="2" />
+    </edges>
+  </graph>
+</gexf>

@@ -1,0 +1,234 @@
+/*
+  @author: Jorge Navarro Gonzalez y Mario Ubierna San Mames
+  @date: 26/10/2017
+  @version: 1.0
+*/
+options {
+  BUILD_TOKEN_MANAGER=true;
+  COMMON_TOKEN_ACTION=false;
+  STATIC=false;
+}
+
+PARSER_BEGIN(Practica2)
+
+public class Practica2 {
+    public static void main(String args []) throws ParseException, java.io.FileNotFoundException
+    {
+    Practica2TokenManager tkmngr = null;
+    if (args.length < 1){
+      tkmngr = new Practica2TokenManager(new SimpleCharStream(System.in));
+    }
+    else{
+      tkmngr = new Practica2TokenManager(new SimpleCharStream(new java.io.FileInputStream(args [0]), 0, 0));
+    }
+    Token tk;
+    try
+    {
+      while ((tk = tkmngr.getNextToken()).kind != EOF);
+    }
+    catch(TokenMgrError x){
+      System.err.println("Error");
+      throw new RuntimeException(x);
+    }
+  if(Practica2TokenManager.tipoGraph.compareTo("g")==0){
+      System.out.println("El grafo "+Practica2TokenManager.nombreGrafo+" no es dirigido");
+  }
+  if(Practica2TokenManager.tipoGraph.compareTo("d")==0){
+    System.out.println("El grafo "+Practica2TokenManager.nombreGrafo+" es dirigido");
+  }
+  if(Practica2TokenManager.subgrafoLargo.length()==0){
+    System.out.println("No hay subgrafos");
+  }else{
+    System.out.println("El subgrafo con el nombre más largo es: "+Practica2TokenManager.subgrafoLargo);
+  }
+  System.out.println("El nodo "+Practica2TokenManager.nombreNodo+" es el que más segmentos tiene: "+Practica2TokenManager.numladosmayor);
+  if(Practica2TokenManager.etiquetalarga.length()==0){
+    System.out.println("No hay nodos con etiqueta");
+  }else{
+    System.out.println("La etiqueta mas larga es: "+Practica2TokenManager.etiquetalarga);
+  }
+}
+}
+PARSER_END(Practica2)
+
+TOKEN_MGR_DECLS :
+{
+  static String tipoGraph, nombreGrafo = new String(); //la primera es para el tipo del grafo y la segunda para guardar el nombre del grafo
+  static String subgrafoActual,subgrafoLargo = new String(); //para saber el nombre del subgrafo actual y la otra para guardar en ella el subgrafo de nombre mas largo
+  static String nombreNodoActual,nombreNodo = new String(); //guardamos el nombre del nodo actual y en la otra el nombre del nodo mas largo
+  static String etiquetaactual, etiquetalarga = new String(); //guardamos la etiqueta actual y la etiqueta mas larga
+  static boolean tiposhape=false; //flag para saber si el nodo tiene la etiqueta shape
+  static boolean etiqueta=false; //flag para saber si el nodo tiene la etiqueta label
+  static boolean poligono=false; //flag para saber si el nodo tiene la etiqueta polygon
+  static boolean countlados=false; //flag para saber si el nodo tiene la etiqueta sides
+  static int numladosmayor=0; //para guardar el número de lados del nodo con mayor número de lados
+  static int numactual=0; //para guardar el número actual de lados de un nodo
+  static boolean subgrafo=false; //flag para saber si estoy dentro de un subgrafo
+  static boolean soyNode=false; //flag para saber si es un node con la estructura node[]
+  static int prevstate;//para guardar el estado previo
+}
+
+
+TOKEN :
+{
+  <#ID: (["a"-"z","A"-"Z","_","\200"-"\377"](["a"-"z","A"-"Z","0" - "9","_","\200"-"\377"])*)|("\""(~["\""])+"\"")|("<"(~[">"])+">")>
+| <#NUM: ([ "0"-"9" ])+ >
+| <#ESPACIO: (["\t"," "])*>
+}
+
+<*> SKIP :
+{
+  <"//"(~["\n"])*> {}
+| <"/*"> {prevstate=curLexState;} : COMM
+}
+
+<COMM> SKIP :
+{
+  <"*/"> {SwitchTo(prevstate);}
+}
+
+TOKEN :
+{
+  <"graph"> {tipoGraph="g";} : GRAPHNAME
+| <"digraph"> {tipoGraph="d";} : GRAPHNAME
+}
+
+<GRAPHNAME> TOKEN :
+{
+  <Etiqueta1: <ID>> {nombreGrafo=image.toString();} : GRAPHNAME
+}
+
+<GRAPHNAME,SUBGRAPHNAME> TOKEN :
+{
+  <"{"> : STMTLIST
+}
+
+<STMTLIST> TOKEN :
+{
+  <"subgraph">  {//ponemos el flag subgrafo a true
+                  subgrafo=true;} : SUBGRAPHNAME
+}
+
+<SUBGRAPHNAME> TOKEN :
+{
+  <Etiqueta2: <ID>>  {//aqui comparamos el subgrafo largo con el actual y nos quedamos con el mas largo de los dos
+           subgrafoActual=image.toString();
+           if(subgrafoLargo.length() == 0 || subgrafoActual.compareTo(subgrafoLargo)<0){
+              subgrafoLargo=subgrafoActual;
+           }} : SUBGRAPHNAME
+}
+
+<STMTLIST> SKIP :
+{
+  <"node"> {//ponemos el flag soynode a true para decir que estamos en un nodo
+            soyNode=true;} : ASSIG
+| <(<ID>)(<ESPACIO>)"=">
+}
+
+<STMTLIST> TOKEN :
+{
+  <Etiqueta3: <ID>>  {//comprobamos si estamos en un nodo y si ese nodo es un poligono para quedarnos con el nombre en caso de que su numero de lados sea el mas grande
+                      if(soyNode && poligono){
+                          if(numactual==numladosmayor){
+                            nombreNodo=image.toString();
+                            soyNode=false;
+                          }
+                      }
+                      //ponemos los flags a falso
+                      tiposhape=false;
+                      etiqueta=false;
+                      countlados=false;
+                      poligono=false;
+                      nombreNodoActual=image.toString();
+                    } : ASSIG
+}
+
+<VALPROP> TOKEN :
+{
+  <Eti1: (<NUM>)|(<ID>)> : STMTLIST
+}
+
+<ASSIG> TOKEN :
+{
+  <"["> : ATTLIST
+}
+
+<ASSIG> TOKEN :
+{
+  <"="> {//dejamos el nodo actual vacío si nos encontramos con un = ya que no seria un nodo sino una variable
+          nombreNodoActual=new String();} : VALPROP
+}
+
+<ASSIG> TOKEN :
+{
+  <"-"> {//hacemos el mismo proceso que hicimos anteriormente
+          nombreNodoActual=new String();} : STMTLIST
+}
+
+<VALATT> TOKEN :
+{
+  <","> : ATTLIST
+| <";"> : ATTLIST
+}
+
+<ATTLIST> TOKEN :
+{
+  <"="> : VALATT
+}
+
+<ATTLIST> TOKEN :
+{
+  <Etiqueta5: <ID>>    {//comprobamos si leemos la forma, si leemos etiqueta o si leemos sides y ponemos el correspondiente a true
+          if(image.toString().compareTo("shape")==0){
+            tiposhape=true;
+          }
+          if(image.toString().compareTo("label")==0){
+            etiqueta=true;
+          }
+          if(poligono && image.toString().compareTo("sides")==0){
+            countlados=true;
+          }} : ATTLIST
+}
+
+<VALATT> TOKEN :
+{
+  <Eti2: (<NUM>)|(<ID>)>  {//si es forma y tiene polygon ponemos el flag polygon a true
+                    if(tiposhape && image.toString().compareTo("polygon")==0){
+                      poligono=true;
+                    }
+                    //aqui comparamos la etiqueta para quedarnos con la mas larga
+                    if(etiqueta){
+                      etiqueta=false;
+                      etiquetaactual=image.toString();
+                      if(etiquetalarga.length() == 0 || etiquetaactual.compareTo(etiquetalarga)<0){
+                        etiquetalarga=etiquetaactual;
+                      }
+                    }
+                    //aqui comprobamos los lados para quedarnos con el que mas lados tenga
+                    if(countlados){
+                      countlados=false;
+                      numactual=Integer.parseInt(image.toString());
+                      if(numactual>numladosmayor && nombreNodoActual != null){
+                        numladosmayor=numactual;
+                        nombreNodo=nombreNodoActual;
+                        }
+                      }
+                    } : VALATT
+}
+
+<VALATT> TOKEN :
+{
+  <"]"> : STMTLIST
+}
+
+<STMTLIST> TOKEN :
+{
+  <"}"> {if(subgrafo){
+          subgrafo=false;
+          SwitchTo(STMTLIST);
+        }}
+}
+<*> SKIP :
+{
+ 	<~[]>
+}
